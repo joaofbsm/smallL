@@ -7,6 +7,7 @@ public class Lexer {
     public static int line = 1;
     char peek = ' ';
     Hashtable words = new Hashtable();
+
     void reserve(Word w) { words.put(w.lexeme, w); }
 
     public Lexer() {
@@ -20,7 +21,7 @@ public class Lexer {
         reserve( Type.Bool );  reserve( Type.Float );
     }
 
-    void readch() throws IOException { peek = (char)System.in.read(); }
+    void readch() throws IOException { peek = (char)System.in.read();}
    
     boolean readch(char c) throws IOException {
         readch();
@@ -30,12 +31,13 @@ public class Lexer {
     }
 
     public Token scan() throws IOException {
+
         for( ; ; readch() ) {
             if( peek == ' '|| peek == '\t' ) continue; 
             else if( peek =='\n')line=line+1; 
             else break;
         }
-        
+
         switch( peek ) {
             case '&': 
                 if( readch('&') ) return Word.and;  else return new Token('&');
@@ -44,11 +46,11 @@ public class Lexer {
             case '=':
                 if( readch('=') ) return Word.eq;   else return new Token('=');
             case '!':
-                if( readch('=') ) return Word.ne;
+                if( readch('=') ) return Word.ne;   else return new Token('!');
             case '<':
-                if( readch('=') ) return Word.le;
+                if( readch('=') ) return Word.le;   else return new Token('<');
             case '>':
-                if( readch('=') ) return Word.ge;
+                if( readch('=') ) return Word.ge;   else return new Token('>');
         }
 
         if( Character.isDigit(peek) ) {
