@@ -15,5 +15,5 @@ for test in "$tests_dir"/*
 do
     output_name="${test##*/}"
     echo "Compiling $output_name"
-    java "$main_path"/main.Main "$test" > "$outputs_dir"/"$output_name"
+    java code.main.Main "$test" > "$outputs_dir"/"$output_name"
 done

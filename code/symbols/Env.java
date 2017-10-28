@@ -1,6 +1,6 @@
-package symbols;  // Arquivo Env.java
+package code.symbols;  // Arquivo Env.java
 
-import java.util.*; import lexer.*; import inter.*;
+import java.util.*; import code.lexer.*; import code.inter.*;
 
 public class Env {
     private Hashtable table;

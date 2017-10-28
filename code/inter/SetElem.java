@@ -1,7 +1,7 @@
-package inter;  // Arquivo SetElem.java
+package code.inter;  // Arquivo SetElem.java
 
-import lexer.*; 
-import symbols.*;
+import code.lexer.*; 
+import code.symbols.*;
 
 public class SetElem extends Stmt {
     public Id array; 

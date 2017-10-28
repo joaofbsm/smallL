@@ -1,4 +1,4 @@
-package inter;  // Arquivo Break.java
+package code.inter;  // Arquivo Break.java
 
 public class Break extends Stmt {
     Stmt stmt;

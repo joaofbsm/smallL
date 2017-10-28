@@ -1,6 +1,6 @@
-package inter;  // Arquivo If.java
+package code.inter;  // Arquivo If.java
 
-import symbols.*;
+import code.symbols.*;
 
 public class If extends Stmt {
     Expr expr; Stmt stmt;

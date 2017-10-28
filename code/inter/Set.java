@@ -1,7 +1,7 @@
-package inter;  // Arquivo Set.java
+package code.inter;  // Arquivo Set.java
 
-import lexer.*; 
-import symbols.*;
+import code.lexer.*; 
+import code.symbols.*;
 
 public class Set extends Stmt {
     public Id id; public Expr expr;

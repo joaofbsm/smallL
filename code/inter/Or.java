@@ -1,7 +1,7 @@
-package inter;  // Arquivo Or.java
+package code.inter;  // Arquivo Or.java
 
-import lexer.*; 
-import symbols.*;
+import code.lexer.*; 
+import code.symbols.*;
 
 public class Or extends Logical {
     public Or(Token tok, Expr x1, Expr x2) { super(tok, x1, x2); }

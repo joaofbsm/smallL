@@ -1,6 +1,6 @@
-package inter;  // Arquivo Else.java
+package code.inter;  // Arquivo Else.java
 
-import symbols.*;
+import code.symbols.*;
 
 public class Else extends Stmt {
     Expr expr; Stmt stmt1, stmt2;

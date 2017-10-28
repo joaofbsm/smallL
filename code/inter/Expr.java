@@ -1,7 +1,7 @@
-package inter;  // Arquivo Expr.java
+package code.inter;  // Arquivo Expr.java
 
-import lexer.*; 
-import symbols.*;
+import code.lexer.*; 
+import code.symbols.*;
 
 public class Expr extends Node {
     public Token op;

@@ -1,6 +1,6 @@
-package symbols;  // Arquivo Type.java
+package code.symbols;  // Arquivo Type.java
 
-import lexer.*;
+import code.lexer.*;
 
 public class Type extends Word {
     public int width = 0;  // width \’e usado para aloca\c{c}\~ao de mem\’oria

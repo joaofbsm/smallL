@@ -1,6 +1,6 @@
-package symbols;  // Arquivo Array.java
+package code.symbols;  // Arquivo Array.java
 
-import lexer.*;
+import code.lexer.*;
 
 public class Array extends Type {
     public Type of;  // arranjo *of* type

@@ -1,4 +1,4 @@
-package lexer;  // Arquivo Token.java
+package code.lexer;  // Arquivo Token.java
 
 public class Token {
     public final int tag;

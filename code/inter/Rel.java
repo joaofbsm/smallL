@@ -1,7 +1,7 @@
-package inter;  // Arquivo Rel.java
+package code.inter;  // Arquivo Rel.java
 
-import lexer.*; 
-import symbols.*;
+import code.lexer.*; 
+import code.symbols.*;
 
 public class Rel extends Logical {
     public Rel(Token tok, Expr x1, Expr x2) { super(tok, x1, x2); }

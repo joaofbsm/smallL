@@ -1,13 +1,13 @@
-package inter;  // Arquivo While.java
+package code.inter;  // Arquivo While.java
 
-import symbols.*;
+import code.symbols.*;
 
 public class While extends Stmt {
     Expr expr; Stmt stmt;
     
     public While() { expr = null; stmt = null; } 
 
-    public void init(Expr x,Stmts){
+    public void init(Expr x, Stmt s){
         expr=x; stmt=s;
         if( expr.type != Type.Bool ) expr.error("boolean required in while");
     }

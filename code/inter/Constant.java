@@ -1,7 +1,7 @@
-package inter;  // Arquivo Constant.java
+package code.inter;  // Arquivo Constant.java
 
-import lexer.*; 
-import symbols.*;
+import code.lexer.*; 
+import code.symbols.*;
 
 public class Constant extends Expr {
     public Constant(Token tok, Type p) { super(tok, p); }

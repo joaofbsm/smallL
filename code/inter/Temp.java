@@ -1,7 +1,7 @@
-package inter;  // Arquivo Temp.java
+package code.inter;  // Arquivo Temp.java
 
-import lexer.*; 
-import symbols.*;
+import code.lexer.*; 
+import code.symbols.*;
 
 public class Temp extends Expr {
    static int count = 0;

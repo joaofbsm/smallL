@@ -1,7 +1,7 @@
-package inter;  // Arquivo Not.java
+package code.inter;  // Arquivo Not.java
 
-import lexer.*; 
-import symbols.*;
+import code.lexer.*; 
+import code.symbols.*;
 
 public class Not extends Logical {
     public Not(Token tok, Expr x2) { super(tok, x2, x2); }

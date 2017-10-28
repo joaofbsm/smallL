@@ -1,7 +1,7 @@
-package inter;  // Arquivo And.java
+package code.inter;  // Arquivo And.java
 
-import lexer.*; 
-import symbols.*;
+import code.lexer.*; 
+import code.symbols.*;
 
 public class And extends Logical {
     public And(Token tok, Expr x1, Expr x2) { super(tok, x1, x2); }

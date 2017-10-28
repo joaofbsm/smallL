@@ -1,6 +1,6 @@
-package inter;  // Arquivo Node.java
+package code.inter;  // Arquivo Node.java
 
-import lexer.*;
+import code.lexer.*;
 
 public class Node {
     int lexline = 0;

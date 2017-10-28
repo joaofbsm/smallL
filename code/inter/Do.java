@@ -1,6 +1,6 @@
-package inter;  // Arquivo Do.java
+package code.inter;  // Arquivo Do.java
 
-import symbols.*;
+import code.symbols.*;
 
 public class Do extends Stmt {
     Expr expr; Stmt stmt;

@@ -1,4 +1,4 @@
-package lexer;  // Arquivo Word.java
+package code.lexer;  // Arquivo Word.java
 
 public class Word extends Token {
     public String lexeme = "";

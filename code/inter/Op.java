@@ -1,7 +1,7 @@
-package inter;  // Arquivo Op.java
+package code.inter;  // Arquivo Op.java
 
-import lexer.*; 
-import symbols.*;
+import code.lexer.*; 
+import code.symbols.*;
 
 public class Op extends Expr {
     public Op(Token tok, Type p)  { super(tok, p); }

@@ -1,7 +1,7 @@
-package inter;  // Arquivo Id.java
+package code.inter;  // Arquivo Id.java
 
-import lexer.*; 
-import symbols.*;
+import code.lexer.*; 
+import code.symbols.*;
 
 public class Id extends Expr {
    public int offset;  // endere\c{c}o relativo

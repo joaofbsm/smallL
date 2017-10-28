@@ -1,7 +1,7 @@
-package inter;  // Arquivo Access.java
+package code.inter;  // Arquivo Access.java
 
-import lexer.*; 
-import symbols.*;
+import code.lexer.*; 
+import code.symbols.*;
 
 public class Access extends Op {
     public Id array;

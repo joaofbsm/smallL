@@ -1,7 +1,7 @@
-package inter;  // Arquivo Unary.java
+package code.inter;  // Arquivo Unary.java
 
-import lexer.*; 
-import symbols.*;
+import code.lexer.*; 
+import code.symbols.*;
 
 public class Unary extends Op {
     public Expr expr;

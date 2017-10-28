@@ -1,4 +1,4 @@
-package lexer;  // Arquivo Tag.java
+package code.lexer;  // Arquivo Tag.java
 
 public class Tag {
     public final static int

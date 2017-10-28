@@ -1,7 +1,7 @@
-package inter;  // Arquivo Arith.java
+package code.inter;  // Arquivo Arith.java
 
-import lexer.*; 
-import symbols.*;
+import code.lexer.*; 
+import code.symbols.*;
 
 public class Arith extends Op {
     public Expr expr1, expr2;

@@ -1,7 +1,7 @@
-package inter;  // Arquivo Logical.java
+package code.inter;  // Arquivo Logical.java
 
-import lexer.*; 
-import symbols.*;
+import code.lexer.*; 
+import code.symbols.*;
 
 public class Logical extends Expr {
     public Expr expr1, expr2;
