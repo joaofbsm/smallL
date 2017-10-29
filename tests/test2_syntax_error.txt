@@ -1,0 +1,6 @@
+{
+	int a; char b;
+	while {
+		int c;
+	}
+}

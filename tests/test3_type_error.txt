@@ -1,0 +1,8 @@
+{
+  int a; char b; float c;
+  a = 1;
+  b = 2;
+  if (a == b) {
+  	c = 0;
+  }
+}
