@@ -20,8 +20,8 @@ public class Expr extends Node {
             emit("if " + test + " goto L" + t);
             emit("goto L" + f);
         }
-        else if(t!=0)emit("if "+test+" gotoL"+t);
-        else if(f!=0)emit("iffalse "+test+" gotoL"+f);
+        else if(t!=0)emit("if "+test+" goto L"+t);
+        else if(f!=0)emit("iffalse "+test+" goto L"+f);
         else ; // nada, porque ambos t e f fall through
     }
 

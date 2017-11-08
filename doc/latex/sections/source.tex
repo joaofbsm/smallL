@@ -1,0 +1,39 @@
+\section{Código e Utilização}
+
+\subsection{Obtendo o código fonte}
+Por ser muito extenso, preferimos não descrever todo o código do compilador neste documento, disponibilizando-o no repositório mencionado na seção de introdução.
+
+Para obter o código, basta clonar o repositório utilizando o comando:
+
+\begin{lstlisting}
+git clone https://github.com/joaofbsm/smallL.git
+\end{lstlisting}
+
+ou baixar o \texttt{.zip} disponibilizado ao clicar em \textbf{"Clone or download"} e depois em \textbf{"Download ZIP"} (na página do repositório).
+
+Caso tenha optado pela segunda opção, basta descompactar e entrar na pasta descompactada.
+
+\subsection{Compilando e executando}
+Para facilitar a utilização do \textit{front end} foram criados dois scripts \textit{bash} que condensam as tarefas de compilar o código e executar testes em apenas duas chamadas na linha de comando.
+
+\begin{itemize}
+\item \texttt{compile.sh}: responsável por compilar as classes Java necessárias para o funcionamento do \textit{front end}.
+\item \texttt{execute.sh}: reponsável por testar todas as entradas de teste disponibilizadas no diretório \texttt{tests}.
+\end{itemize}
+
+Para criar um caso de teste, basta adicionar um arquivo \texttt{.txt}, contendo o teste desejado, no diretório \texttt{tests} presente no diretório raiz do \textit{front end}
+
+Para rodar os scripts, siga os seguintes passos:\\
+
+
+
+\begin{lstlisting}
+// mude para o diretorio raiz do front end
+cd /caminho_para_diretorio_raiz/smallL
+// compila
+./compile.sh
+// executa testes
+./execute.sh
+\end{lstlisting}
+
+A saída dos testes é a padrão, ou seja, será escrita no terminal para cada um dos testes presentes no diretório.
