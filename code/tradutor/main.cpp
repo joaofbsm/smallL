@@ -1,11 +1,22 @@
-void leArqEntrada( string file_name, Quadruplas &Q ){
+#include <cstring>
+#include <cstdio>
+#include <iostream>
+
+using namespace std;
+
+#include "quadruplas.hpp"
+#include "tradutor.hpp"
+#include "tabela_simb_floresta.hpp"
+
+
+void leArqEntrada( string file_name, Quadrupla &Q ){
     
     string s;
     Quadrupla q;
     ifstream input( file_name.c_str(), ios::in );
     
     if ( !input ) {
-        cout << "O arquivo " << file_name << " nao existe. O programa terminara agora!" << endl
+        cout << "O arquivo " << file_name << " nao existe. O programa terminara agora!" << endl;
         exit(0); 
     
     } else {
@@ -22,7 +33,7 @@ int main( int argc, char *argv[] ){
     string file_name_in;
     string file_name_out;
     Tradutor T;
-    Quadruplas Q;
+    Quadrupla Q;
     
     if( argc < 3 ) {
         cout << "Escreva o nome do arquivo de entrada: " << endl;
