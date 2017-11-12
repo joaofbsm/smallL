@@ -55,6 +55,10 @@ L1:		dload 3
       dstore 1
 \end{lstlisting}
 
+\texttt{dstore 1} salva o valor que está no topo da pilha na posição 1 do arranjo de variáveis locais da JVM. Esse arranjo é criado para cada classe/interface, e contem as variáveis locais da mesma, começando a indexar por 1 e gastando dois índices por variável do tipo \texttt{double}. 
+
+Como o gerador de código intermediário não deixa nenhuma anotação do tipo das variáveis, todas elas(incluindo os arrays) serão do tipo \texttt{double} no código \textbf{Jasmin}.
+
 \subsubsection{Atribuição com expressão aritmética: \texttt{x = y arith\_op z} }
 
 Uma atribuição com expressão é baseada em 3 operandos (\texttt{x} (op1), \texttt{y} (op2) e \texttt{z} (op3) ) e um operador aritmético (\texttt{arith\_op}). A atribuição segue as seguintes ações: primeiro carregam-se os operandos 2 e 3 da memória. Depois, os operandos 2 e 3 são somados através do comando \texttt{dload} (ações baseadas em pilha). Por final, o valor somado é salvo no operando 1 (os operandos 1, 2 e 3 estavam salvos nos endereços 1, 3 e 5, respectivamente). A sequência de passos pode ser vista no código abaixo, podendo-se substituir os operandos 2 e 3 por constantes caso algum desses fosse uma constante (utilizando o comando \texttt{ldc2\_w 1.0}, por exemplo).

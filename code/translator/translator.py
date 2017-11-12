@@ -161,7 +161,7 @@ def build_header():
     """Builds the unchanging header"""
 
     print(
-""".version 52 0 
+""".version 50 0 
 .class public super Main 
 .super java/lang/Object 
 
@@ -190,7 +190,7 @@ def build_footer():
 def main(args):
     file_path = args[1]
     stack_size = 4  # Max stack size
-    n_locals = 50
+    n_locals = 100
 
     label_eq, label_line = parse_labels(file_path)
 

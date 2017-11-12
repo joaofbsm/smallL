@@ -1,4 +1,4 @@
-.version 52 0 
+.version 50 0 
 .class public super Main 
 .super java/lang/Object 
 
