@@ -1,0 +1,7 @@
+L1:	i = 1
+L3:	j = 10
+L4:	iffalse i < j goto L2
+L5:	t1 = 0
+	a [ t1 ] = j
+L2:
+

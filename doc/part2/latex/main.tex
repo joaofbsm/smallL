@@ -1,0 +1,38 @@
+\documentclass [11pt]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[greek,portuguese]{babel}
+\usepackage{graphicx}
+\usepackage{minted}
+\usepackage{fancyvrb}
+\usepackage{xcolor}
+\usepackage{listings}
+\usepackage{hyperref}
+
+\lstset{
+  basicstyle=\ttfamily,
+  columns=fullflexible,
+  frame=single,
+  breaklines=true,
+  postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space},
+}
+
+\renewcommand{\lstlistingname}{Código}
+
+\title{Trabalho Prático III}
+\author{Universidade Federal de Minas Gerais \\ Departamento de Ciência da Computação \\ Compiladores I \\ \\ João Francisco B. S. Martins,  Pedro D. V. Chaves \\ \texttt{\{joaofbsm, pedrodallav\}@dcc.ufmg.br}}
+
+\begin{document}
+\maketitle
+
+\input{sections/introduction}
+\input{sections/toolsconcepts}
+\input{sections/development}
+\input{sections/source}
+\input{sections/tests}
+\input{sections/conclusion}
+
+\bibliographystyle{IEEEannot}
+\bibliography{annot}
+\end{document}

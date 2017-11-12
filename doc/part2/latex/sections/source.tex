@@ -1,0 +1,60 @@
+\section{Código e Utilização}
+
+Por ser muito extenso, preferimos não descrever todo o código do \textbf{tradutor} neste documento, disponibilizando-o no repositório mencionado na seção de introdução.
+
+Para obter o código, basta clonar o repositório utilizando o comando:
+
+\begin{lstlisting}
+git clone https://github.com/joaofbsm/smallL.git
+\end{lstlisting}
+
+ou baixar o \texttt{.zip} disponibilizado ao clicar em \textbf{"Clone or download"} e depois em \textbf{"Download ZIP"} (na página do repositório).
+
+Caso tenha optado pela segunda opção, basta descompactar e entrar na pasta descompactada.
+
+\subsection{Traduzindo}
+Para facilitar a utilização do \textbf{tradutor} foram criados dois scripts \textit{bash} que condensam as tarefas de compilar o código do \textit{front-end}  e executar o \textit{front-end} (necessário para geração das quadruplas).
+
+\begin{itemize}
+\item \texttt{compile.sh}: responsável por compilar as classes Java necessárias para o funcionamento do \textit{front end}.
+\item \texttt{execute.sh}: reponsável por testar todas as entradas de teste (código na linguagem \textbf{SmallL}) disponibilizadas no diretório \texttt{tests}.
+\end{itemize}
+
+Para traduzir os códigos intermediários gerados, basta executar o script \texttt{translate.sh} (após ter executado os dois scripts citados acima).
+
+Para criar um caso de teste, basta adicionar um arquivo \texttt{.txt}, contendo o teste desejado (em linguagem SmallL), no diretório \texttt{tests} presente no diretório raiz do \textit{front-end}.
+
+Caso deseje rodar um teste em específico, cuja entrada já está em formato de código intermediário, basta rodar:
+
+\begin{lstlisting}
+// mude para o diretorio raiz do front end
+cd /caminho_para_diretorio_raiz/smallL
+cd code/translator
+python3 translator.py codigo_intermediario
+\end{lstlisting}
+
+Tal comando produzirá na saída padrão o código traduzido na sintaxe Jasmin. Para rodar a sequência de scripts completa, siga os seguintes passos:
+
+\begin{lstlisting}
+// mude para o diretorio raiz do front end
+cd /caminho_para_diretorio_raiz/smallL
+// compila
+./compile.sh
+// executa front-end
+./execute.sh
+// traduz codigo intermediario
+./translate.sh
+\end{lstlisting}
+
+A saída dos testes se encontra na pasta \texttt{outputs}. Os \texttt{.txt} gerados são referentes ao código intermediário gerado pelo \textit{front-end}. Dentro do diretório \texttt{outputs} há uma pasta denominada \texttt{translated} que contém os códigos em Jasmin (\texttt{.j}) gerados pelo \textbf{tradutor} e os binários gerados pelo \textbf{Krakatau} (arquivos \texttt{.class} dentro das pastas \texttt{nome\_teste-bin/}), a partir dos códigos gerados pelo tradutor.
+
+Para uma melhor formatação da saída, é aconselhável rodar o \texttt{disassembler} do \textbf{Krakatau} nos arquivos \texttt{.class} gerados. Para tal, rode a seguinte linha de comando:
+
+\begin{lstlisting}
+\\ entre no diretorio com a saida binaria
+cd caminho_para_smallL/outputs/translated/nome_teste-bin/
+\\ rode o disassembler
+python2.7 ../../../tools/Krakatau/disassemble.py Main.class
+\end{lstlisting}
+
+Tal comando produzirá um arquivo \texttt{Main.j} em sintaxe Jasmin, contendo o código produzido pelo tradutor em uma formatação mais clara e organizada.

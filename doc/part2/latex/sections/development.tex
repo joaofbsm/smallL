@@ -1,0 +1,202 @@
+\section{Desenvolvimento}
+
+\subsection{Visão Geral}
+
+O \textbf{tradutor} em questão teve sua implementação feita através da linguagem \textbf{Python} pela maior facilidade presente para manipulação de cadeias de caracteres (passo essencial para a tradução). Além disso, Python foi usada para tornar a comunicação com a ferramenta \textbf{Krakatau} mais fácil e eficiente.
+
+O \textit{front-end} implementado no trabalho anterior tem como saída um código intermediário que tem por base 7 tipos de operações possíveis:
+
+\begin{itemize}
+\item \textbf{atribuição direta}: \texttt{x = y}
+\item \textbf{atribuição com expressão aritmética}: \texttt{x = y arith\_op z}
+\item \textbf{atribuição para posição de vetor}: \texttt{x[p] = y}
+\item \textbf{atribuição de posição de vetor}: \texttt{x = y[p]}
+\item \textbf{if com comparação}: \texttt{if x logic\_op y goto L}
+\item \textbf{iffalse com comparação}: \texttt{iffalse x logic\_op y goto L}
+\item \textbf{desvio}: \texttt{goto L}
+\end{itemize}
+
+A partir dos formatos de operações descritos acima, foi possível desenvolver um \textbf{tradutor} que indentificasse cada tipo de formato no arquivo de saída do gerador de código intermediário e gerasse código na sintaxe \textbf{Jasmin}, que por sua vez seria passado para o \textit{assembler} do \textbf{Krakatau} para gerar \textit{bytecodes} binários.
+
+
+\subsection{Implementação}
+
+O \textbf{tradutor} é implementado através dos 4 arquivos abaixo (além da integração com o \textbf{Krakatau}):
+
+\begin{itemize}
+\item \texttt{translator.py}: parseia e traduz o arquivo de código intermediário para \textit{bytecodes} Java utilizando sintaxe \textbf{Jasmin}. 
+\item \texttt{opbuilder.py}: constrói operações baseadas na sintaxe de \textit{bytecodes} \textbf{Jasmin}.
+\item \texttt{operation.py}: classe auxiliar para estruturar a representação de uma \textbf{operação}.
+\item \texttt{variable.py}: classe auxiliar para estruturar a representação de uma \textbf{variável}.
+\end{itemize}
+
+O arquivo \texttt{translator.py} parseia o arquivo de entrada, gerando dicionários para os \textit{labels} (um dicionário para guardar os diferentes \textit{labels} e suas respectivas linhas e outro para guardar referências para \textit{labels} já existentes).
+
+O bytecode não permite que uma mesma linha possua mais de um \textit{label}, como pode ocorrer no código intermediário. Sendo assim, uma forma de criar equivalências entre \textit{labels} foi implementada utilizando um dicionário, que é preenchido nessa primeira passada sob o arquivo.
+
+Uma vez identificados os \textit{labels}, são geradas uma ou mais operações equivalentes na sintaxe \textbf{Jasmin}. Isso é feito através do módulo \texttt{opbuilder.py}, que mapeia cada uma dos formatos das quádruplas elucidadas acima para uma operação equivalente em \textbf{Jasmin}.
+
+\subsection{Operações em bytecode}
+
+A seguir será mostrado como cada tipo de operação que pode estar presente no código intermediário é mapeada para uma possível sequência de códigos na sintaxe \textbf{Jasmin}.
+
+\subsubsection{Atribuição direta: \texttt{x = y} }
+
+Uma atribuição simples é baseada em duas ações: carregar um operando (\texttt{y}) da memória (checando a tabela de símbolos) e salvar esse valor no operando do lado esquerdo \texttt{x}. No código abaixo, os valores de \texttt{x} e \texttt{y} já haviam sido inicializados (com valores nos endereços 1 e 3, respectivamente)
+
+
+\begin{lstlisting}[caption=Operação de atribuição em código intermediário.]
+L1:	x = y
+\end{lstlisting}
+
+
+\begin{lstlisting}[caption=Operação de atribuição simples em Jasmin.]
+L1:		dload 3
+      dstore 1
+\end{lstlisting}
+
+\subsubsection{Atribuição com expressão aritmética: \texttt{x = y arith\_op z} }
+
+Uma atribuição com expressão é baseada em 3 operandos (\texttt{x} (op1), \texttt{y} (op2) e \texttt{z} (op3) ) e um operador aritmético (\texttt{arith\_op}). A atribuição segue as seguintes ações: primeiro carregam-se os operandos 2 e 3 da memória. Depois, os operandos 2 e 3 são somados através do comando \texttt{dload} (ações baseadas em pilha). Por final, o valor somado é salvo no operando 1 (os operandos 1, 2 e 3 estavam salvos nos endereços 1, 3 e 5, respectivamente). A sequência de passos pode ser vista no código abaixo, podendo-se substituir os operandos 2 e 3 por constantes caso algum desses fosse uma constante (utilizando o comando \texttt{ldc2\_w 1.0}, por exemplo).
+
+
+\begin{lstlisting}[caption=Operação de atribuição com expressão aritmética em código intermediário.]
+L2:	x = y + z
+\end{lstlisting}
+
+
+\begin{lstlisting}[caption=Operação de atribuição com expressão aritmética em Jasmin.]
+L2:	     dload 3
+     dload 5
+     dadd
+     dstore 1
+\end{lstlisting}
+
+
+\subsubsection{Atribuição para posição de vetor: \texttt{a[x] = z} }
+
+Uma atribuição para posição de vetor requer uma sequência maior de passos. Explicaremos o passo a passo de cada trecho de código presente no Código 6:
+
+\begin{lstlisting}
+dload 1
+ldc2_w 8.0
+dmul
+dstore 7
+\end{lstlisting}
+
+A JVM não requer a multiplicação do índice por 8 nos vetores, ou seja, sempre que é recebida uma variável que vai ser o índice de um array, ela por \textit{default} já é multiplicada por 8.
+
+O código imediatamente acima carrega o valor que vai ser o índice (salvo no endereço 1), carrega a constante 8 na pilha e multiplica. Os próximos passos são indicados abaixo:
+
+\begin{lstlisting}
+sipush 1000
+newarray double
+astore 9
+\end{lstlisting}
+
+Cria um \textit{array} de double de 1000 posições (por \textit{default}) e salva na memória na posição 9.
+
+\begin{lstlisting}
+dload 7
+ldc2_w 8.0
+ddiv
+dstore 7
+\end{lstlisting}
+
+O tradutor identifica que o endereço 7 vai ser usado como o índice do array, carrega esse endereço na pilha e também carrega a constante 8. Após isso, divide ambos e salva novamente no endereço 7.
+
+\begin{lstlisting}
+aload 9
+dload 7
+d2i
+dload 5
+dastore
+\end{lstlisting}
+
+Por último, carrega o ponteiro do \textit{array} (endereço 9) e  carrega a variável temporária que representa o índice (endereço 7). Pega o valor mais alto na pilha e converte de \texttt{double} para \texttt{int} (comando \texttt{d2i}), para que indexação seja possível. Finaliza carregando o valor a ser atribuído para a posição do vetor e salva esse valor na posição. 
+
+Abaixo podemos ver a sequência de passos completa.
+
+
+\begin{lstlisting}[caption=Atribuição para posição de vetor em código intermediário.]
+L3:	t1 = x * 8
+     a [ t1 ] = z
+\end{lstlisting}
+
+\begin{lstlisting}[caption=Atribuição para posição de vetor em Jasmin.]
+L3:    dload 1
+     ldc2_w 8.0
+     dmul
+     dstore 7
+     sipush 1000
+     newarray double
+     astore 9
+     dload 7
+     ldc2_w 8.0
+     ddiv
+     dstore 7
+     aload 9
+     dload 7
+     d2i
+     dload 5
+     dastore
+\end{lstlisting}
+
+
+\subsubsection{Atribuição de posição de vetor: \texttt{y = a[p]} }
+
+A atribuição de posição de vetor segue um raciocínio bem semelhante ao elucidado anteriormente na atribuição para posição de vetor, mudando apenas a ordem de alguns \textit{loads} e \textit{stores}. No exemplo abaixo, o valor de \texttt{p} é uma constante (igual a 1, indicando o índice 1).
+
+
+\begin{lstlisting}[caption=Atribuição de variável utilizando valor na posição de vetor em código intermediário.]
+L4:	t3 = 1 * 8
+  y = a [ t3 ]
+\end{lstlisting}
+
+\begin{lstlisting}[caption=Atribuição de variável utilizando valor na posição de vetor em Jasmin.]
+L4: 	ldc2_w 1.0
+    ldc2_w 8.0
+    dmul
+    dstore 13
+    dload 13
+    ldc2_w 8.0
+    ddiv
+    dstore 13
+    aload 9
+    dload 13
+    d2i
+    daload
+  dstore 3
+\end{lstlisting}
+
+
+\subsubsection{Condicional comparativo: \texttt{if/iffalse x logic\_op y goto L} }
+
+A comparação iffalse é feita da seguinte forma: primeiro são carregados os operandos (x e y) a serem comparados (na pilha) e em seguida o comando \texttt{dcmpl} compara os dois números, retornando como resultado 0 se forem iguais, 1 se y maior que x e -1 caso contrário. O último comando (\texttt{iflt}) verifica o resultado e, se x menor que y, desvia para L2.
+
+\begin{lstlisting}[caption=iffalse com comparação em código intermediário]
+L6:	iffalse x >= y goto L2
+\end{lstlisting}
+
+\begin{lstlisting}[caption=iffalse com comparação em Jasmin]
+L6: dload 1
+     dload 3
+     dcmpl
+     iflt L2
+\end{lstlisting}
+
+A diferença de \texttt{iffalse} e \texttt{if} é baseada no fato de iffalse ser utilizado com operador de maior ou igual (\texttt{>=}) e if ser utilizado com operador de menor (\texttt{<}).
+
+Com isso, uma tradução de uma operação com if, geraria a seguinte sequência:
+\begin{lstlisting}[caption=if com comparação em Jasmin]
+L6: dload 1
+     dload 3
+     dcmpl
+     ifgt L2
+\end{lstlisting}
+
+Ou seja, com a lógica "inversa" do iffalse, pois utiliza o comando \texttt{ifgt}, verificando o resultado de \texttt{dcmpl} de forma invertida.
+
+\subsubsection{Desvio: \texttt{goto L}}
+O comando de desvio funciona da mesma forma (e com a mesma sintaxe) em ambos os códigos (intermediário e na sintaxe Jasmin).
+

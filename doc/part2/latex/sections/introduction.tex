@@ -1,0 +1,15 @@
+\section{Introdução}
+
+O trabalho em questão tem como objetivo implementar um \textbf{tradutor} da linguagem intermediária gerada pelo \textit{front-end} da linguagem \textbf{SmallL} para Java \textbf{bytecode}. Para codificação dos componentes do tradutor foi utilizada a linguagem de programação \textbf{Java} (\textit{v.8}) e a linguagem \textbf{Python} (\textit{v.3}). 
+
+Para auxiliar a implementação foram utilizadas as seguintes ferramentas:
+
+\begin{itemize}
+\item \textbf{Jasmin}: \textit{assembler} para Java que recebe descrição textual de classes Java, numa sintaxe de bytecodes extendida, e as converte para arquivos binários no formato \texttt{.class}
+\item \textbf{Krakatau}: \textit{decompiler}, \textit{disassembler} e \textit{assembler} para arquivos \texttt{.class} Java.
+\end{itemize}
+
+A ferramenta Jasmin foi desenvolvida para acompanhar o livro \textit{Java Virtual Machine}\cite{trove.nla.gov.au/work/14968069}, e, apesar de já ter sido descontinuada há 9 anos, sua sintaxe é tão mais límpida e fácil de editar e entender, do que a gerada pelas próprias ferramentas Java, que ela continua sendo usada até hoje pelos assemblers e disassemblers \textit{third-party}, como o \textbf{ASM}, o \textbf{Soot} e o próprio \textbf{Krakatau}. Portanto a única coisa utilizada de \textbf{Jasmin} nesse trabalho foi sua sintaxe, e não a ferramenta de montagem propriamente dita.
+
+O trabalho foi desenvolvido utilizando a ferramenta de versionamento Git juntamente com a plataforma de desenvolvimento remoto GitHub. O repositório do projeto contém não só o código fonte, mas também os scripts auxiliares desenvolvidos e os arquivos de teste, podendo ser acessado no endereço \url{https://github.com/joaofbsm/smallL}. Mais especificamente, o código do tradutor descrito neste trabalho se encontra na subpasta \url{https://github.com/joaofbsm/smallL/tree/master/code/translator}.
+

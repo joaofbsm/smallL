@@ -1,0 +1,18 @@
+\section{Conceitos e Ferramentas}
+
+A seguir serão apresentados conceitos e definições para auxiliar o entendimento do trabalho implementado. Também será apresentado como as ferramentas escolhidas auxiliaram no desenvolvimento do \textbf{tradutor}.
+
+\subsection{Bytecode Java e JVM}
+
+O código de um programa de computador escrito na linguagem Java é compilado para uma forma intermediária de código denominada \textbf{bytecode}, que é interpretada pelas Máquinas Virtuais Java (JVMs) e independe da arquitetura da máquina que a gerou. A JVM é o programa que carrega e executa os aplicativos Java, convertendo os bytecodes em código executável de máquina. Os \textit{bytecodes} são portanto o conjunto de instruções da JVM.
+
+A interpretação processa os \textit{bytecodes} um por um, promovendo modificações no estado da máquina virtual.
+
+\subsection{Jasmin e Krakatau}
+
+Para promover o \textit{disassemble} de um arquivo \texttt{.class}, utiliza-se o comando \texttt{javap -c}, gerando como saída uma forma legível por humanos das instruções que compõem os \textit{bytecodes} Java.
+
+Porém, não é possivel voltar da saída do comando anterior para o \textit{bytecode} original (instruções em hexadecimal), pois ocorrem perdas de informação durante o processo de \textit{disassemble}.
+
+Para contornar tal problema, utilizou-se a sintaxe do \textbf{Jasmin} com auxílio das ferramentas de montagem e desmontagem do \textbf{Krakatau}. Ou seja, a saída do gerador de código intermedíario (quadruplas) é parseada e traduzida, gerando instruções no formato \textbf{Jasmin} (sintaxe no formato de \textit{assembler} usando o conjunto de instruções da JVM). O \textit{assembler} do \textbf{Krakatau} é então utilizado para gerar \textit{bytecodes} binários que podem rodar na JVM.
+

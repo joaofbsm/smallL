@@ -1,0 +1,68 @@
+Classfile /Users/joaofbsm/Documents/UFMG/2017-2/Compiladores/TPS/TP2-3-4/outputs/translated/test3-bin/Main.class
+  Last modified 12-Nov-2017; size 297 bytes
+  MD5 checksum 5c600a66e25d001505616b1d6fcfd0bf
+  Compiled from "Main.java"
+public class Main
+  minor version: 0
+  major version: 52
+  flags: ACC_PUBLIC, ACC_SUPER
+Constant pool:
+   #1 = Class              #21            // Main
+   #2 = Class              #20            // java/lang/Object
+   #3 = Utf8               <init>
+   #4 = Utf8               ()V
+   #5 = Utf8               Code
+   #6 = Methodref          #2.#19         // java/lang/Object."<init>":()V
+   #7 = Utf8               main
+   #8 = Utf8               ([Ljava/lang/String;)V
+   #9 = Double             1.0d
+  #11 = Double             10.0d
+  #13 = Double             0.0d
+  #15 = Double             8.0d
+  #17 = Utf8               SourceFile
+  #18 = Utf8               Main.java
+  #19 = NameAndType        #3:#4          // "<init>":()V
+  #20 = Utf8               java/lang/Object
+  #21 = Utf8               Main
+{
+  public Main();
+    descriptor: ()V
+    flags: ACC_PUBLIC
+    Code:
+      stack=1, locals=1, args_size=1
+         0: aload_0
+         1: invokespecial #6                  // Method java/lang/Object."<init>":()V
+         4: return
+
+  public static void main(java.lang.String[]);
+    descriptor: ([Ljava/lang/String;)V
+    flags: ACC_PUBLIC, ACC_STATIC
+    Code:
+      stack=4, locals=50, args_size=1
+         0: ldc2_w        #9                  // double 1.0d
+         3: dstore        1
+         5: ldc2_w        #11                 // double 10.0d
+         8: dstore        3
+        10: dload         1
+        12: dload         3
+        14: dcmpg
+        15: ifge          50
+        18: ldc2_w        #13                 // double 0.0d
+        21: ldc2_w        #15                 // double 8.0d
+        24: dmul
+        25: dstore        5
+        27: sipush        1000
+        30: newarray       double
+        32: astore        7
+        34: dload         5
+        36: ldc2_w        #15                 // double 8.0d
+        39: ddiv
+        40: dstore        5
+        42: aload         7
+        44: dload         5
+        46: d2i
+        47: dload         3
+        49: dastore
+        50: return
+}
+SourceFile: "Main.java"

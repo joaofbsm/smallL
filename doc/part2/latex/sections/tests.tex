@@ -1,0 +1,366 @@
+\section{Testes}
+
+A seguir são apresentados alguns testes que tentam englobar todas as possíveis instruções geradas em sintaxe Jasmin. A sequência de arquivos para cada teste é a seguinte:
+
+\begin{enumerate}
+\item arquivo em linguagem \textbf{SmallL}
+\item arquivo com código intermediário gerado a partir de 1.
+\item arquivo com código traduzido a partir de 2.
+\end{enumerate}
+
+
+\subsection{Teste 1}
+
+\begin{lstlisting}[caption=Arquivo para o teste 1 em linguagem SmallL]
+{
+    int x; int y; int z; float d; float e; float[3] a;
+    
+    x = 1;
+    y = 10;
+    z = 5;
+    
+    x = y;
+    x = y + z;
+
+    a[x] = z;
+    a[2] = 1.5;
+
+    y = a[1];
+
+    if( x >= y ) x = 1;
+}
+\end{lstlisting}
+
+\begin{lstlisting}[caption=Arquivo com código intermediário para o teste 1 produzido pelo front-end]
+L1:	x = 1
+L3:	y = 10
+L4:	z = 5
+L5:	x = y
+L6:	x = y + z
+L7:	t1 = x * 8
+    a [ t1 ] = z
+L8:	t2 = 2 * 8
+    a [ t2 ] = 1.5
+L9:	t3 = 1 * 8
+    y = a [ t3 ]
+L10:	iffalse x >= y goto L2
+L11:	x = 1
+L2:
+\end{lstlisting}
+
+\begin{lstlisting}[caption=\textbf{Código em sintaxe Jasmin para o teste 1 produzido pelo tradutor implementado}]
+.version 52 0 
+.class public super Main 
+.super java/lang/Object 
+
+.method public <init> : ()V 
+	.code stack 1 locals 1 
+L0:		aload_0 
+L1:		invokespecial Method java/lang/Object <init> ()V 
+L4:		return 
+L5:     
+	.end code 
+.end method 
+
+.method public static main : ([Ljava/lang/String;)V
+	.code stack 4 locals 50
+
+L1:											 ldc2_w 1.0
+		dstore 1
+L3:											 ldc2_w 10.0
+		dstore 3
+L4:											 ldc2_w 5.0
+		dstore 5
+L5:											 dload 3
+		dstore 1
+L6: 	dload 3
+		dload 5
+		dadd
+		dstore 1
+L7:											 dload 1
+		ldc2_w 8.0
+		dmul
+		dstore 7
+		sipush 1000
+		newarray double
+		astore 9
+		dload 7
+		ldc2_w 8.0
+		ddiv
+		dstore 7
+		aload 9
+		dload 7
+		d2i
+		dload 5
+		dastore
+L8:											 ldc2_w 2.0
+		ldc2_w 8.0
+		dmul
+		dstore 11
+		dload 11
+		ldc2_w 8.0
+		ddiv
+		dstore 11
+		aload 9
+		dload 11
+		d2i
+		ldc2_w 1.5
+		dastore
+L9:											 ldc2_w 1.0
+		ldc2_w 8.0
+		dmul
+		dstore 13
+		dload 13
+		ldc2_w 8.0
+		ddiv
+		dstore 13
+		aload 9
+		dload 13
+		d2i
+		daload
+		dstore 3
+L10:											 dload 1
+		dload 3
+		dcmpl
+		iflt L2
+L11:											 ldc2_w 1.0
+		dstore 1
+L2:											 return
+	.end code 
+.end method 
+.sourcefile 'Main.java' 
+.end class
+
+\end{lstlisting}
+
+
+\subsection{Teste 2}
+
+\begin{lstlisting}[caption=Arquivo do teste 2 em linguagem SmallL]
+{
+    int i; int j; float v; float x; float[3] a;
+    i = 1;
+    j = 10;
+    v = 2;
+    x = 6;
+    a[0] = 1;
+    a[1] = 2;
+    a[2] = 3;
+
+    while( true ) {
+        do i = i+1; while( a[i] < v);
+        do j = j-1; while( a[j] > v);
+        if( i >= j ) break;
+        x = a[i]; a[i] = a[j]; a[j] = x;
+    }
+}
+\end{lstlisting}
+
+\begin{lstlisting}[caption=Arquivo com código intermediário para o teste 2 produzido pelo front-end]
+L1:	i = 1
+L3:	j = 10
+L4:	v = 2
+L5:	x = 6
+L6:	t1 = 0 * 8
+    a [ t1 ] = 1
+L7:	t2 = 1 * 8
+    a [ t2 ] = 2
+L8:	t3 = 2 * 8
+    a [ t3 ] = 3
+L9:L10:	i = i + 1
+L12:	t4 = i * 8
+      t5 = a [ t4 ]
+      if t5 < v goto L10
+L11:	j = j - 1
+L14:	t6 = j * 8
+      t7 = a [ t6 ]
+      if t7 > v goto L11
+L13:	iffalse i >= j goto L15
+L16:	goto L2
+L15:	t8 = i * 8
+      x = a [ t8 ]
+L17:	t9 = i * 8
+      t10 = j * 8
+      t11 = a [ t10 ]
+      a [ t9 ] = t11
+L18:	t12 = j * 8
+      a [ t12 ] = x
+      goto L9
+L2:
+
+\end{lstlisting}
+
+\begin{lstlisting}[caption=\textbf{Código para o teste 2 em sintaxe Jasmin produzido pelo tradutor implementado}]
+.version 52 0 
+.class public super Main 
+.super java/lang/Object 
+
+.method public <init> : ()V 
+	.code stack 1 locals 1 
+L0:		aload_0 
+L1:		invokespecial Method java/lang/Object <init> ()V 
+L4:		return 
+L5:     
+	.end code 
+.end method 
+
+.method public static main : ([Ljava/lang/String;)V
+	.code stack 4 locals 50
+
+L1:												 ldc2_w 1.0
+		dstore 1
+L3:												 ldc2_w 10.0
+		dstore 3
+L4:												 ldc2_w 2.0
+		dstore 5
+L5:												 ldc2_w 6.0
+		dstore 7
+L6:												 ldc2_w 0.0
+		ldc2_w 8.0
+		dmul
+		dstore 9
+		sipush 1000
+		newarray double
+		astore 11
+		dload 9
+		ldc2_w 8.0
+		ddiv
+		dstore 9
+		aload 11
+		dload 9
+		d2i
+		ldc2_w 1.0
+		dastore
+L7:												 ldc2_w 1.0
+		ldc2_w 8.0
+		dmul
+		dstore 13
+		dload 13
+		ldc2_w 8.0
+		ddiv
+		dstore 13
+		aload 11
+		dload 13
+		d2i
+		ldc2_w 2.0
+		dastore
+L8:												 ldc2_w 2.0
+		ldc2_w 8.0
+		dmul
+		dstore 15
+		dload 15
+		ldc2_w 8.0
+		ddiv
+		dstore 15
+		aload 11
+		dload 15
+		d2i
+		ldc2_w 3.0
+		dastore
+L9:												 dload 1
+		ldc2_w 1.0
+		dadd
+		dstore 1
+L12:											 dload 1
+		ldc2_w 8.0
+		dmul
+		dstore 17
+		dload 17
+		ldc2_w 8.0
+		ddiv
+		dstore 17
+		aload 11
+		dload 17
+		d2i
+		daload
+		dstore 19
+		dload 19
+		dload 5
+		dcmpg
+		iflt L9
+L11:											 dload 3
+		ldc2_w 1.0
+		dsub
+		dstore 3
+L14:											 dload 3
+		ldc2_w 8.0
+		dmul
+		dstore 21
+		dload 21
+		ldc2_w 8.0
+		ddiv
+		dstore 21
+		aload 11
+		dload 21
+		d2i
+		daload
+		dstore 23
+		dload 23
+		dload 5
+		dcmpl
+		ifgt L11
+L13:											 dload 1
+		dload 3
+		dcmpl
+		iflt L15
+L16:											 goto L2
+L15:											 dload 1
+		ldc2_w 8.0
+		dmul
+		dstore 25
+		dload 25
+		ldc2_w 8.0
+		ddiv
+		dstore 25
+		aload 11
+		dload 25
+		d2i
+		daload
+		dstore 7
+L17:											 dload 1
+		ldc2_w 8.0
+		dmul
+		dstore 27
+		dload 3
+		ldc2_w 8.0
+		dmul
+		dstore 29
+		dload 29
+		ldc2_w 8.0
+		ddiv
+		dstore 29
+		aload 11
+		dload 29
+		d2i
+		daload
+		dstore 31
+		dload 27
+		ldc2_w 8.0
+		ddiv
+		dstore 27
+		aload 11
+		dload 27
+		d2i
+		dload 31
+		dastore
+L18:											 dload 3
+		ldc2_w 8.0
+		dmul
+		dstore 33
+		dload 33
+		ldc2_w 8.0
+		ddiv
+		dstore 33
+		aload 11
+		dload 33
+		d2i
+		dload 7
+		dastore
+		goto L9
+L2:											 return
+	.end code 
+.end method 
+.sourcefile 'Main.java' 
+.end class
+\end{lstlisting}
+
