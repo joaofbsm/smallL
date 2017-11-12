@@ -7,7 +7,6 @@
 #bash_version   :GNU bash, version 4.4.0(1)-release
 #==============================================================================
 
-main_path=$(pwd)"code/main"
 tests_dir=$(pwd)"/tests"
 outputs_dir=$(pwd)"/outputs"
 
