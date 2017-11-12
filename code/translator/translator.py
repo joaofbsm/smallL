@@ -65,6 +65,15 @@ def add_variable(variable_name, symbol_table, is_array):
 
 
 def get_quadruple(line, symbol_table, label_eq, opbuilder):
+    """State Machine that identifies the type of operation and its operands
+    
+    Arguments:
+        line -- Parsed line of code that contains the quadruple.
+        symbol_table -- Dictionary describing the symbol table.
+        label_eq -- Dictionary describing the label equivalency.
+        opbuilder -- Operation builder object.
+    """
+
     operator = None
     op1 = None  # Operand 1
     op2 = None  # Operand 2
