@@ -1,3 +1,12 @@
+#!/usr/bin/env python3
+
+"""Translates Three Address Code(TAC) to Java bytecodes with Jasmin syntax"""
+
+__author__ = "João Francisco B. S. Martins and Pedro Dalla Vechia Chaves"
+__email__ = "joaofbsm@dcc.ufmg.br, pedrodallav@dcc.ufmg.br"
+__license__ = "GPL"
+__version__ = "3.0"
+
 import re
 import sys
 from variable import Variable

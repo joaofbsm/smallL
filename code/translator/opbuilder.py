@@ -1,7 +1,19 @@
+#!/usr/bin/env python3
+
+"""Operation builder. Builds operations based in bytecode syntax"""
+
+__author__ = "João Francisco B. S. Martins and Pedro Dalla Vechia Chaves"
+__email__ = "joaofbsm@dcc.ufmg.br, pedrodallav@dcc.ufmg.br"
+__license__ = "GPL"
+__version__ = "3.0"
+
 import re
+
 
 class OpBuilder:
     def __init__(self):
+        """Operation builder constructor"""
+
         self.methods = {"attrib": self.build_attrib,  # Attribute value to variable
                         "arith_attrib": self.build_arith_attrib,  # Attribution with arithmetic operation
                         "arr_attrib": self.build_arr_attrib,  # Attribute value to array position
