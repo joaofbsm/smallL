@@ -10,6 +10,8 @@
 tests_dir=$(pwd)"/tests"
 outputs_dir=$(pwd)"/outputs"
 
+mkdir -p "$outputs_dir"
+
 for test in "$tests_dir"/*
 do
     output_name="${test##*/}"
