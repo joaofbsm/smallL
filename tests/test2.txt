@@ -1,0 +1,10 @@
+{
+    int i; int j; float v; float x; float[3] a;
+    i = 1;
+    j = 10;
+
+    a[i] = 0;
+    a[2] = 1.5;
+
+    j = a[1] + a[2];
+}

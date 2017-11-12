@@ -14,6 +14,8 @@ outputs_dir=$(pwd)"/outputs"
 for test in "$tests_dir"/*
 do
     output_name="${test##*/}"
-    echo "Compiling $output_name"
-    java code.main.Main < "$test" 
+    if [[ -f $test ]]; then
+        echo "Compiling $output_name"
+        java code.main.Main < "$test" > "$outputs_dir"/"$output_name"
+    fi
 done
