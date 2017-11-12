@@ -15,6 +15,12 @@ from opbuilder import OpBuilder
 
 
 def parse_labels(file_path):
+    """Parse the labels in the file and generate two dictionaries.
+    
+    Arguments:
+        file_path -- Path to intermediate code file.
+    """
+
     label_eq = {}  # Label equivalency dictionary
     label_line = {}  # Label per line number
     with open(file_path, 'r') as f:
@@ -28,6 +34,12 @@ def parse_labels(file_path):
 
 
 def is_variable(name):
+    """Check if name is a valid variable name using regex
+    
+    Arguments:
+        name -- Name to be matched.
+    """
+
     variable_pattern = re.compile("^[a-zA-Z_$][a-zA-Z_$0-9]*")
     if name == "if" or name == "iffalse" or name == "goto":
         return False
@@ -36,6 +48,17 @@ def is_variable(name):
 
 
 def add_variable(variable_name, symbol_table, is_array):
+    """Add variable to symbol table.
+    
+    Involves declaration of variables and also updates the list of JVM's local
+    variables.
+    
+    Arguments:
+        variable_name -- Variable name.
+        symbol_table -- Dictionary describing the symbol table.
+        is_array -- Flag specifying if variable is an array.
+    """
+
     _type = "double_arr" if is_array else "double"
     pos = (len(symbol_table) * 2) + 1
     symbol_table[variable_name] = Variable(variable_name, _type, pos)
@@ -99,11 +122,18 @@ def get_quadruple(line, symbol_table, label_eq, opbuilder):
 
 
 def parse_code(file_path, label_eq, label_line):
+    """Parses the code translating the operations
+    
+    Arguments:
+        file_path -- Path to intermediate code file.
+        label_eq -- Label equivalence dictionary.
+        label_line -- Lines of code related to label declarations.
+    """
+
     symbol_table = {}
     opbuilder = OpBuilder()  # Operation builder
 
     with open(file_path, 'r') as f:
-        #last_len = 0  # TODO: DELETE
 
         for i, line in enumerate(f):
             line = line.split(':')[-1].split()
@@ -111,9 +141,6 @@ def parse_code(file_path, label_eq, label_line):
 
             if i in label_line:  # Print line label if it exists
                 print("{}: ".format(label_line[i]), end='') 
-                #last_len = len(label_line[i])  # TODO: DELETE
-            #else:
-                #print("  " + (" " * last_len + "{}".format(operation.operator)))
 
             # Build Jasmin equivalent of the operation     
             opbuilder.methods[operation.operator](operation, symbol_table) 
@@ -122,6 +149,8 @@ def parse_code(file_path, label_eq, label_line):
 
 
 def build_header():
+    """Builds the unchanging header"""
+
     print(
 """.version 52 0 
 .class public super Main 
@@ -140,6 +169,8 @@ L5:
 
 
 def build_footer():
+    """Builds the unchanging footer"""
+
     print(
 """\t.end code 
 .end method 

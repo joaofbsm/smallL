@@ -52,7 +52,7 @@ class OpBuilder:
         
         Arguments:
             op -- Operand.
-            symbol_table -- Symbol table.
+            symbol_table -- Dictionary describing the symbol table.
         """
 
         if self.is_variable(op):
@@ -67,7 +67,7 @@ class OpBuilder:
         
         Arguments:
             array -- Array to be loaded.
-            symbol_table -- Symbol table.
+            symbol_table -- Dictionary describing the symbol table.
         """
 
         arr = symbol_table[arr]
@@ -79,7 +79,7 @@ class OpBuilder:
         
         Arguments:
             op -- Operand.
-            symbol_table -- Symbol table.
+            symbol_table -- Dictionary describing the symbol table.
         """
 
         op = symbol_table[op]
@@ -91,7 +91,7 @@ class OpBuilder:
         
         Arguments:
             arr -- Array to be stored.
-            symbol_table -- Symbol table.
+            symbol_table -- Dictionary describing the symbol table.
         """
 
         arr = symbol_table[arr]

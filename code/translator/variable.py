@@ -10,6 +10,14 @@ __version__ = "3.0"
 
 class Variable:
     def __init__(self, name, _type, pos):
+        """Variable constructor
+        
+        Arguments:
+            name -- Variable name.
+            _type -- Variable type.
+            pos -- Variable position in symbol table.
+        """
+        
         self.name = name
         self._type = _type
         self.pos = pos
