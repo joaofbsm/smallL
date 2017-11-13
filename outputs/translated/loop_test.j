@@ -12,19 +12,20 @@ L5:
 .end method 
 
 .method public static main : ([Ljava/lang/String;)V
-	.code stack 4 locals 100
+	.code stack 4 locals 5
 
-L1: 		ldc2_w 1.0
+L1:		ldc2_w 1.0
 		dstore 1
-L3: 		ldc2_w 10.0
+L3:		ldc2_w 10.0
 		dstore 3
-L4: 		dload 1
+L4:		dload 1
 		dload 3
 		dcmpg
 		ifge L4
-L6: 		goto L2
+L6:		goto L2
 		goto L4
-L2: 		return
+L2:		return
+
 	.end code 
 .end method 
 .sourcefile 'Main.java' 

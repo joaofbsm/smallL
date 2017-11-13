@@ -12,23 +12,20 @@ L5:
 .end method 
 
 .method public static main : ([Ljava/lang/String;)V
-	.code stack 4 locals 100
+	.code stack 4 locals 35
 
-L1: 		ldc2_w 1.0
+L1:		ldc2_w 1.0
 		dstore 1
-L3: 		ldc2_w 10.0
+L3:		ldc2_w 10.0
 		dstore 3
-L4: 		ldc2_w 2.0
+L4:		ldc2_w 2.0
 		dstore 5
-L5: 		ldc2_w 6.0
+L5:		ldc2_w 6.0
 		dstore 7
-L6: 		ldc2_w 0.0
+L6:		ldc2_w 0.0
 		ldc2_w 8.0
 		dmul
 		dstore 9
-		sipush 1000
-		newarray double
-		astore 11
 		dload 9
 		ldc2_w 8.0
 		ddiv
@@ -38,7 +35,7 @@ L6: 		ldc2_w 0.0
 		d2i
 		ldc2_w 1.0
 		dastore
-L7: 		ldc2_w 1.0
+L7:		ldc2_w 1.0
 		ldc2_w 8.0
 		dmul
 		dstore 13
@@ -51,7 +48,7 @@ L7: 		ldc2_w 1.0
 		d2i
 		ldc2_w 2.0
 		dastore
-L8: 		ldc2_w 2.0
+L8:		ldc2_w 2.0
 		ldc2_w 8.0
 		dmul
 		dstore 15
@@ -64,11 +61,11 @@ L8: 		ldc2_w 2.0
 		d2i
 		ldc2_w 3.0
 		dastore
-L9: 		dload 1
+L9:		dload 1
 		ldc2_w 1.0
 		dadd
 		dstore 1
-L12: 		dload 1
+L12:	dload 1
 		ldc2_w 8.0
 		dmul
 		dstore 17
@@ -85,11 +82,11 @@ L12: 		dload 1
 		dload 5
 		dcmpg
 		iflt L9
-L11: 		dload 3
+L11:	dload 3
 		ldc2_w 1.0
 		dsub
 		dstore 3
-L14: 		dload 3
+L14:	dload 3
 		ldc2_w 8.0
 		dmul
 		dstore 21
@@ -106,12 +103,12 @@ L14: 		dload 3
 		dload 5
 		dcmpl
 		ifgt L11
-L13: 		dload 1
+L13:	dload 1
 		dload 3
 		dcmpl
 		iflt L15
-L16: 		goto L2
-L15: 		dload 1
+L16:	goto L2
+L15:	dload 1
 		ldc2_w 8.0
 		dmul
 		dstore 25
@@ -124,7 +121,7 @@ L15: 		dload 1
 		d2i
 		daload
 		dstore 7
-L17: 		dload 1
+L17:	dload 1
 		ldc2_w 8.0
 		dmul
 		dstore 27
@@ -150,7 +147,7 @@ L17: 		dload 1
 		d2i
 		dload 31
 		dastore
-L18: 		dload 3
+L18:	dload 3
 		ldc2_w 8.0
 		dmul
 		dstore 33
@@ -164,7 +161,7 @@ L18: 		dload 3
 		dload 7
 		dastore
 		goto L9
-L2: 		getstatic Field java/lang/System out Ljava/io/PrintStream;
+L2:		getstatic Field java/lang/System out Ljava/io/PrintStream;
 		dload 1
 		invokevirtual Method java/io/PrintStream println (D)V
 		getstatic Field java/lang/System out Ljava/io/PrintStream;
@@ -173,7 +170,8 @@ L2: 		getstatic Field java/lang/System out Ljava/io/PrintStream;
 		getstatic Field java/lang/System out Ljava/io/PrintStream;
 		dload 7
 		invokevirtual Method java/io/PrintStream println (D)V
-L19: 		return
+L19:	return
+
 	.end code 
 .end method 
 .sourcefile 'Main.java' 

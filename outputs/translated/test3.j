@@ -12,23 +12,20 @@ L5:
 .end method 
 
 .method public static main : ([Ljava/lang/String;)V
-	.code stack 4 locals 100
+	.code stack 4 locals 9
 
-L1: 		ldc2_w 1.0
+L1:		ldc2_w 1.0
 		dstore 1
-L3: 		ldc2_w 10.0
+L3:		ldc2_w 10.0
 		dstore 3
-L4: 		dload 1
+L4:		dload 1
 		dload 3
 		dcmpg
 		ifge L2
-L5: 		ldc2_w 0.0
+L5:		ldc2_w 0.0
 		ldc2_w 8.0
 		dmul
 		dstore 5
-		sipush 1000
-		newarray double
-		astore 7
 		dload 5
 		ldc2_w 8.0
 		ddiv
@@ -38,7 +35,8 @@ L5: 		ldc2_w 0.0
 		d2i
 		dload 3
 		dastore
-L2: 		return
+L2:		return
+
 	.end code 
 .end method 
 .sourcefile 'Main.java' 

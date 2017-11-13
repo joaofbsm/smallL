@@ -64,14 +64,14 @@ def add_variable(variable_name, symbol_table, is_array):
     symbol_table[variable_name] = Variable(variable_name, _type, pos)
 
 
-def get_quadruple(line, symbol_table, label_eq, opbuilder):
+def get_quadruple(line, symbol_table, label_eq, op_builder):
     """State Machine that identifies the type of operation and its operands
     
     Arguments:
         line -- Parsed line of code that contains the quadruple.
         symbol_table -- Dictionary describing the symbol table.
         label_eq -- Dictionary describing the label equivalency.
-        opbuilder -- Operation builder object.
+        op_builder -- Operation builder object.
     """
 
     operator = None
@@ -88,7 +88,7 @@ def get_quadruple(line, symbol_table, label_eq, opbuilder):
         if line[1] == '[': # Operation is attributing to array(arr_attrib)
             if line[0] not in symbol_table:
                 add_variable(line[0], symbol_table, is_array=True)
-                opbuilder.declare_arr(symbol_table[line[0]])
+                op_builder.declare_arr(symbol_table[line[0]])
 
             operator = "arr_attrib"
             op1 = line[0]  # Array variable
@@ -134,7 +134,7 @@ def get_quadruple(line, symbol_table, label_eq, opbuilder):
     return Operation(operator, op1, op2, op3, arith_op, goto)
 
 
-def parse_code(file_path, label_eq, label_line):
+def translate_code(file_path, label_eq, label_line):
     """Parses the code translating the operations
     
     Arguments:
@@ -144,21 +144,32 @@ def parse_code(file_path, label_eq, label_line):
     """
 
     symbol_table = {}
-    opbuilder = OpBuilder()  # Operation builder
+    op_builder = OpBuilder()  # Operation builder
+    translated = ""
 
     with open(file_path, 'r') as f:
 
         for i, line in enumerate(f):
             line = line.split(':')[-1].split()
-            operation = get_quadruple(line, symbol_table, label_eq, opbuilder)
-
-            if i in label_line:  # Print line label if it exists
-                print("{}: ".format(label_line[i]), end='') 
+            operation = get_quadruple(line, symbol_table, label_eq, op_builder)
 
             # Build Jasmin equivalent of the operation     
-            opbuilder.methods[operation.operator](operation, symbol_table) 
+            op_translated = op_builder.methods[operation.operator](operation, 
+                                                                  symbol_table) 
 
-    return 8, " "
+            if i in label_line:  # Print line label if it exists
+                if len(label_line[i]) <= 2:
+                    translated += ("{}:\t\t{}".format(label_line[i], 
+                                                      op_translated))
+                else:
+                    translated += ("{}:\t{}".format(label_line[i], 
+                                                    op_translated))
+            else:
+                translated += ("\t\t{}".format(op_translated)) 
+
+    n_locals = (len(symbol_table) * 2) + 1
+
+    return n_locals, translated
 
 
 def build_header():
@@ -194,15 +205,15 @@ def build_footer():
 def main(args):
     file_path = args[1]
     stack_size = 4  # Max stack size
-    n_locals = 100
 
     label_eq, label_line = parse_labels(file_path)
 
     build_header()
 
-    print(("\t.code stack {} locals {}\n").format(stack_size, n_locals))
+    n_locals, translated_code = translate_code(file_path, label_eq, label_line)
 
-    n_locals, gen_code = parse_code(file_path, label_eq, label_line)
+    print(("\t.code stack {} locals {}\n").format(stack_size, n_locals))
+    print("{}".format(translated_code))
     
     build_footer()
     
