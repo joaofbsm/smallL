@@ -22,12 +22,24 @@ L4:		dload 1
 		dload 3
 		dcmpg
 		ifge L2
-L5:		dload 1
+L5:		getstatic Field java/lang/System out Ljava/io/PrintStream;
+		ldc 'i: '
+		invokevirtual Method java/io/PrintStream print (Ljava/lang/String;)V
+		getstatic Field java/lang/System out Ljava/io/PrintStream;
+		dload 1
+		invokevirtual Method java/io/PrintStream println (D)V
+		dload 1
 		ldc2_w 1.0
 		dadd
 		dstore 1
 		goto L4
-L2:		return
+L2:		getstatic Field java/lang/System out Ljava/io/PrintStream;
+		ldc 'i: '
+		invokevirtual Method java/io/PrintStream print (Ljava/lang/String;)V
+		getstatic Field java/lang/System out Ljava/io/PrintStream;
+		dload 1
+		invokevirtual Method java/io/PrintStream println (D)V
+L6:		return
 
 	.end code 
 .end method 

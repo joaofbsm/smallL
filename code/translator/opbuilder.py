@@ -414,6 +414,10 @@ class OpBuilder:
         op_seq = ""
 
         op_seq += ("getstatic Field java/lang/System out Ljava/io/PrintStream;\n")
+        op_seq += "\t\tldc '{}: '\n".format(operation.op1)
+        op_seq += ("\t\tinvokevirtual Method java/io/PrintStream print (Ljava/lang/String;)V\n") 
+
+        op_seq += ("\t\tgetstatic Field java/lang/System out Ljava/io/PrintStream;\n")
         op_seq += (self.load_operand(operation.op1, symbol_table))
         op_seq += ("\t\tinvokevirtual Method java/io/PrintStream println (D)V\n")
 

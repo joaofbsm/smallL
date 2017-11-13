@@ -162,11 +162,20 @@ L18:	dload 3
 		dastore
 		goto L9
 L2:		getstatic Field java/lang/System out Ljava/io/PrintStream;
+		ldc 'i: '
+		invokevirtual Method java/io/PrintStream print (Ljava/lang/String;)V
+		getstatic Field java/lang/System out Ljava/io/PrintStream;
 		dload 1
 		invokevirtual Method java/io/PrintStream println (D)V
 		getstatic Field java/lang/System out Ljava/io/PrintStream;
+		ldc 'j: '
+		invokevirtual Method java/io/PrintStream print (Ljava/lang/String;)V
+		getstatic Field java/lang/System out Ljava/io/PrintStream;
 		dload 3
 		invokevirtual Method java/io/PrintStream println (D)V
+		getstatic Field java/lang/System out Ljava/io/PrintStream;
+		ldc 'x: '
+		invokevirtual Method java/io/PrintStream print (Ljava/lang/String;)V
 		getstatic Field java/lang/System out Ljava/io/PrintStream;
 		dload 7
 		invokevirtual Method java/io/PrintStream println (D)V
