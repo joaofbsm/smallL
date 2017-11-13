@@ -21,7 +21,8 @@ class OpBuilder:
                         "if": self.build_if,
                         "iffalse": self.build_iffalse,
                         "goto": self.build_goto,
-                        "empty": self.build_empty}
+                        "empty": self.build_empty,
+                        "print": self.build_print}
 
 
     def declare_arr(self, variable):
@@ -313,3 +314,22 @@ class OpBuilder:
 
     def build_empty(self, operation, symbol_table):
         print("\t\treturn")  # Empty line is the end of the program
+
+
+    def build_print(self, operation, symbol_table):
+        """Build stack code for print(System.out.println) operation
+        
+        operator -> print
+        op1      -> variable to print
+        op2      -> None
+        op3      -> None
+        arith_op -> None
+        goto     -> None
+
+        Arguments:
+            operation -- Operation to be built.
+        """
+
+        print("\t\tgetstatic Field java/lang/System out Ljava/io/PrintStream;")
+        self.load_operand(operation.op1, symbol_table)
+        print("\t\tinvokevirtual Method java/io/PrintStream println (D)V")

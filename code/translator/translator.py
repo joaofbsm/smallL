@@ -41,7 +41,7 @@ def is_variable(name):
     """
 
     variable_pattern = re.compile("^[a-zA-Z_$][a-zA-Z_$0-9]*")
-    if name == "if" or name == "iffalse" or name == "goto":
+    if name == "if" or name == "iffalse" or name == "goto" or name == "print":
         return False
     else:
         return bool(variable_pattern.match(name))
@@ -119,6 +119,10 @@ def get_quadruple(line, symbol_table, label_eq, opbuilder):
     elif line[0] == "goto":  # goto operation
         operator = line[0]
         op1 = label_eq[line[1]]  # goto equivalent label
+
+    elif line[0] == "print":  # print variable
+        operator = line[0]
+        op1 = line[1]  # Variable to be printed
 
     else:  # if or iffalse
         operator = line[0]

@@ -12,7 +12,7 @@ L5:
 .end method 
 
 .method public static main : ([Ljava/lang/String;)V
-	.code stack 4 locals 50
+	.code stack 4 locals 100
 
 L1: 		ldc2_w 1.0
 		dstore 1
@@ -164,7 +164,16 @@ L18: 		dload 3
 		dload 7
 		dastore
 		goto L9
-L2: 		return
+L2: 		getstatic Field java/lang/System out Ljava/io/PrintStream;
+		dload 1
+		invokevirtual Method java/io/PrintStream println (D)V
+		getstatic Field java/lang/System out Ljava/io/PrintStream;
+		dload 3
+		invokevirtual Method java/io/PrintStream println (D)V
+		getstatic Field java/lang/System out Ljava/io/PrintStream;
+		dload 7
+		invokevirtual Method java/io/PrintStream println (D)V
+L19: 		return
 	.end code 
 .end method 
 .sourcefile 'Main.java' 

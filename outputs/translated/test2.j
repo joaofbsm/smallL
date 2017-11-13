@@ -12,7 +12,7 @@ L5:
 .end method 
 
 .method public static main : ([Ljava/lang/String;)V
-	.code stack 4 locals 50
+	.code stack 4 locals 100
 
 L1: 		ldc2_w 1.0
 		dstore 1

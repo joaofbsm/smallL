@@ -22,22 +22,11 @@ L4: 		dload 1
 		dload 3
 		dcmpg
 		ifge L2
-L5: 		ldc2_w 0.0
-		ldc2_w 8.0
-		dmul
-		dstore 5
-		sipush 1000
-		newarray double
-		astore 7
-		dload 5
-		ldc2_w 8.0
-		ddiv
-		dstore 5
-		aload 7
-		dload 5
-		d2i
-		dload 3
-		dastore
+L5: 		dload 1
+		ldc2_w 1.0
+		dadd
+		dstore 1
+		goto L4
 L2: 		return
 	.end code 
 .end method 

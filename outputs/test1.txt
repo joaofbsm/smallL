@@ -27,4 +27,7 @@ L17:	t9 = i * 8
 L18:	t12 = j * 8
 	a [ t12 ] = x
 	goto L9
-L2:
+L2:	print i
+	print j
+	print x
+L19:

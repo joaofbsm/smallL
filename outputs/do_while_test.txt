@@ -1,0 +1,5 @@
+L1:	i = 1
+L3:	j = 10
+L4:	i = i + 1
+L5:	if i < j goto L4
+L2:
