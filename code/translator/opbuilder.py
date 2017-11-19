@@ -23,7 +23,8 @@ class OpBuilder:
                         "goto": self.build_goto,
                         "empty": self.build_empty,
                         "print_var": self.build_print_var,
-                        "print_arr": self.build_print_arr}
+                        "print_arr_int": self.build_print_arr_int,
+                        "print_arr_var": self.build_print_arr_var}
 
 
     def declare_arr(self, variable):
@@ -398,7 +399,7 @@ class OpBuilder:
 
 
     def build_print_var(self, operation, symbol_table):
-        """Build stack code for print(System.out.println) operation
+        """Build stack code for variable print(System.out.println) operation
         
         operator -> print
         op1      -> variable to print
@@ -425,12 +426,14 @@ class OpBuilder:
         return op_seq
 
 
-    def build_print_arr(self, operation, symbol_table):
-        """Build stack code for print(System.out.println) operation
+    def build_print_arr_int(self, operation, symbol_table):
+        """Build stack code for array print(System.out.println) operation
+
+        Array index is an integer
         
         operator -> print
         op1      -> array to print
-        op2      -> array index
+        op2      -> array integer index
         op3      -> None
         arith_op -> None
         goto     -> None
@@ -448,10 +451,43 @@ class OpBuilder:
 
         op_seq += ("\t\tgetstatic Field java/lang/System out Ljava/io/PrintStream;\n")
         op_seq += (self.load_array(operation.op1, symbol_table))
-        op_seq += (self.load_operand(operation.op2, symbol_table))  # Corrected index
+        op_seq += ("\t\tsipush {}\n".format(operation.op2))
+        op_seq += ("\t\tdaload\n")  # Load correct array index
+        op_seq += ("\t\tinvokevirtual Method java/io/PrintStream println (D)V\n")
+
+        return op_seq
+
+
+    def build_print_arr_var(self, operation, symbol_table):
+        """Build stack code for array print(System.out.println) operation
+
+        Array index is a variable
+        
+        operator -> print
+        op1      -> array to print
+        op2      -> array variable index
+        op3      -> None
+        arith_op -> None
+        goto     -> None
+
+        Arguments:
+            operation -- Operation to be built.
+            symbol_table -- Dictionary describing the symbol table.
+        """
+
+        op_seq = ""
+
+        op_seq += ("getstatic Field java/lang/System out Ljava/io/PrintStream;\n")
+        op_seq += "\t\tldc '{}[{}]: '\n".format(operation.op1, operation.op2)
+        op_seq += ("\t\tinvokevirtual Method java/io/PrintStream print (Ljava/lang/String;)V\n") 
+
+        op_seq += ("\t\tgetstatic Field java/lang/System out Ljava/io/PrintStream;\n")
+        op_seq += (self.load_array(operation.op1, symbol_table))
+        op_seq += (self.load_operand(operation.op2, symbol_table))  # Index
         op_seq += ("\t\td2i\n")  # Converting double to int
         op_seq += ("\t\tdaload\n")  # Load correct array index
         op_seq += ("\t\tinvokevirtual Method java/io/PrintStream println (D)V\n")
 
         return op_seq
+
 

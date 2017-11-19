@@ -127,10 +127,13 @@ def get_quadruple(line, symbol_table, label_eq, op_builder):
             operator = "print_var"
             op1 = line[1]  # Variable to be printed
         else:
-            operator = "print_arr"
             op1 = line[1]  # Array to be printed
             op2 = line[3]  # Index of array
-
+            if is_variable(op2):
+                operator = "print_arr_var"
+            else:
+                operator = "print_arr_int"
+            
     else:  # if or iffalse
         operator = line[0]
         op1 = line[1]
