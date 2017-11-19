@@ -34,7 +34,7 @@ class OpBuilder:
 
         op_seq = ""
 
-        op_seq += ("\t\tsipush 1000\n")  # 1000 positions
+        op_seq += ("sipush 1000\n")  # 1000 positions
         op_seq += ("\t\tnewarray double\n")
         op_seq += ("\t\tastore {}\n".format(variable.pos))
 

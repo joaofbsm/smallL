@@ -81,14 +81,16 @@ def get_quadruple(line, symbol_table, label_eq, op_builder):
     arith_op = None  # For arith_attrib
     goto = None  # For if and iffalse
 
+    arr_declaration = ""  # Array declaration 
+
     if len(line) < 2:  # Line is empty
-        return Operation("empty", op1, op2, op3, arith_op, goto)
+        return arr_declaration, Operation("empty", op1, op2, op3, arith_op, goto)
 
     if is_variable(line[0]):
         if line[1] == '[': # Operation is attributing to array(arr_attrib)
             if line[0] not in symbol_table:
                 add_variable(line[0], symbol_table, is_array=True)
-                op_builder.declare_arr(symbol_table[line[0]])
+                arr_declaration = op_builder.declare_arr(symbol_table[line[0]])
 
             operator = "arr_attrib"
             op1 = line[0]  # Array variable
@@ -131,7 +133,7 @@ def get_quadruple(line, symbol_table, label_eq, op_builder):
         op3 = line[3]
         goto = label_eq[line[5]]  # GOTO equivalent label
 
-    return Operation(operator, op1, op2, op3, arith_op, goto)
+    return arr_declaration, Operation(operator, op1, op2, op3, arith_op, goto)
 
 
 def translate_code(file_path, label_eq, label_line):
@@ -151,11 +153,15 @@ def translate_code(file_path, label_eq, label_line):
 
         for i, line in enumerate(f):
             line = line.split(':')[-1].split()
-            operation = get_quadruple(line, symbol_table, label_eq, op_builder)
+            arr_declaration, operation = get_quadruple(line, symbol_table, 
+                                                       label_eq, op_builder)
 
             # Build Jasmin equivalent of the operation     
             op_translated = op_builder.methods[operation.operator](operation, 
                                                                   symbol_table) 
+
+            if arr_declaration:
+                op_translated = arr_declaration + "\t\t" + op_translated
 
             if i in label_line:  # Print line label if it exists
                 if len(label_line[i]) <= 2:

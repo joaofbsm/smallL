@@ -1,6 +1,0 @@
-L1:	i = 1
-L3:	j = 10
-L4:L5:	iffalse i < j goto L4
-L6:	goto L2
-	goto L4
-L2:

@@ -1,0 +1,15 @@
+{
+    int i; int j; int v; float x; float[3] a;
+    
+    i = 1;
+    j = 5;
+    v = 6;
+    x = 6;
+    
+    a[0] = 1;
+    a[1] = 2;
+    a[2] = 3;
+
+    do i = i+1; while( i < v);
+    x = a[2]; a[1] = a[2]; a[0] = x;
+}
