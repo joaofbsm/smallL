@@ -2,7 +2,7 @@
     int i; int j; int v; float x; float[3] a;
     
     i = 1;
-    j = 5;
+    j = 2;
     v = 6;
     x = 6;
     

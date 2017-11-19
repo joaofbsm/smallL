@@ -110,7 +110,7 @@ def get_quadruple(line, symbol_table, label_eq, op_builder):
                 if line[3] == '[':  # Operation is attributing array pos to variable(attrib_arr)
                     operator = "attrib_arr"
                     op2 = line[2]  # Array variable
-                    op3 = line[4] # Index of array
+                    op3 = line[4]  # Index of array
 
                 else:  # Operation is an attribution of arithmetic operation(arith_attrib)
                     operator = "arith_attrib"
@@ -123,8 +123,13 @@ def get_quadruple(line, symbol_table, label_eq, op_builder):
         op1 = label_eq[line[1]]  # goto equivalent label
 
     elif line[0] == "print":  # print variable
-        operator = line[0]
-        op1 = line[1]  # Variable to be printed
+        if len(line) <= 2:
+            operator = "print_var"
+            op1 = line[1]  # Variable to be printed
+        else:
+            operator = "print_arr"
+            op1 = line[1]  # Array to be printed
+            op2 = line[3]  # Index of array
 
     else:  # if or iffalse
         operator = line[0]
