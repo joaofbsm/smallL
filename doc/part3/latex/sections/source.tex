@@ -1,0 +1,111 @@
+\section{Código e Utilização}
+
+Por ser muito extenso, preferimos não descrever todo o código do \textbf{tradutor} neste documento, disponibilizando-o no repositório mencionado na seção de introdução.
+
+Para obter o código, basta clonar o repositório utilizando o comando:
+
+\begin{lstlisting}
+git clone https://github.com/joaofbsm/smallL.git
+\end{lstlisting}
+
+ou baixar o \texttt{.zip} disponibilizado ao clicar em \textbf{"Clone or download"} e depois em \textbf{"Download ZIP"} (na página do repositório).
+
+Caso tenha optado pela segunda opção, basta descompactar e entrar na pasta descompactada.
+
+\subsection{Utilizando o compilador}
+Para facilitar a utilização do \textbf{compilador} foram criados três scripts \textit{bash} que condensam as tarefas de compilar o código do \textit{front-end}, executar o \textit{front-end} e traduzir o código intermediário.
+
+\begin{itemize}
+\item \texttt{compile.sh}: responsável por compilar as classes Java necessárias para o funcionamento do \textit{front end}.
+\item \texttt{execute.sh}: reponsável por testar todas as entradas de teste (código na linguagem \textbf{SmallL}) disponibilizadas no diretório \texttt{tests}, gerando código intermediário.
+\item \texttt{translate.sh}: reponsável por traduzir os códigos intermediários obtidos após o rodar \texttt{execute.sh}, gerando os bytecodes (em formato \texttt{.j} e em formato \texttt{.class} ). 
+\end{itemize}
+
+Para criar um caso de teste, basta adicionar um arquivo \texttt{.txt}, contendo o teste desejado (em linguagem SmallL), no diretório \texttt{tests} presente no diretório raiz do \textit{front-end}.
+
+\begin{lstlisting}
+// mude para o diretorio raiz do front end
+cd /caminho_para_diretorio_raiz/smallL
+// compila
+./compile.sh
+// executa front-end
+./execute.sh
+// traduz codigo intermediario
+./translate.sh
+\end{lstlisting}
+
+A saída dos testes se encontra na pasta \texttt{outputs}. Os \texttt{.txt} gerados são referentes ao código intermediário gerado pelo \textit{front-end}. Dentro do diretório \texttt{outputs} há uma pasta denominada \texttt{translated} que contém os códigos em Jasmin (\texttt{.j}) gerados pelo \textbf{tradutor} e os binários gerados pelo \textbf{Krakatau} (arquivos \texttt{Main.class} dentro das pastas \texttt{nome\_teste-bin/}), a partir dos códigos gerados pelo tradutor.
+
+\subsection{Rodando o código compilado}
+
+Para verificar o funcionamento de um programa compilado, basta invocar o comando \texttt{java} no terminal, passando como parâmetro o arquivo binário do programa (\texttt{.class}). Tal arquivo é gerado a partir da ferramenta \texttt{assembler} do \textbf{Krakatau}. Por exemplo:
+
+\begin{lstlisting}
+// mude para o diretorio contendo binario de algum teste
+cd smallL/outputs/translated/test1-bin/
+// rode o binario (arquivo Main.class)
+java Main
+\end{lstlisting}
+
+\subsection{Comando \textit{print}}
+
+Para facilitar a visualização do funcionamento do programa compilado e executado, adicionamos o comando print no conjunto de instruções do código intermediário. O comando print gera um código que imprime o nome da variável, seguido de dois pontos e o seu valor naquele momento.
+
+Para utilizá-la, basta adicionar no código intermediário um novo comando com a diretiva \textit{print} e um nome de variável (já utilizada anteriormente no código). Os exemplos a seguir mostram a utilização do comando.
+
+\begin{lstlisting}[caption=Codigo na linguagem SmallL.]
+{
+    float i; float j;
+    i = 1;
+    j = 10;
+
+    while (i < j) {
+        i = i + 1;
+    }
+}
+\end{lstlisting}
+
+O código intermediário do exemplo acima é então gerado e o comando print é adicionado ("à mão", ou seja, o arquivo \texttt{.txt} é editado) abaixo dos \textit{labels} L1 e L5:
+
+\begin{lstlisting}[caption=Código intermediário com adição do comando print.]
+L1:	i = 1
+    print i
+L3:	j = 10
+L4:	iffalse i < j goto L2
+L5:	i = i + 1
+    print i
+    goto L4
+L2: 
+\end{lstlisting}
+
+O código traduzido para bytecodes (Jasmin) contém o trecho relativo à chamada da função print:
+
+\begin{lstlisting}[caption=Trecho do código traduzido.]
+...
+
+L2: 			getstatic Field java/lang/System out Ljava/io/PrintStream;
+	ldc 'i: '
+	invokevirtual Method java/io/PrintStream print (Ljava/lang/String;)V
+	getstatic Field java/lang/System out Ljava/io/PrintStream;
+	dload 1
+	invokevirtual Method java/io/PrintStream println (D)V
+	return
+\end{lstlisting}
+
+O resultado após rodar o binário é o seguinte:
+
+\begin{lstlisting}
+i: 1.0
+i: 2.0
+i: 3.0
+i: 4.0
+i: 5.0
+i: 6.0
+i: 7.0
+i: 8.0
+i: 9.0
+i: 10.0
+\end{lstlisting}
+Ou seja, mostra corretamente o valor da variável i (ao longo da execução do programa). 
+	
+O comando print também é capaz de reproduzir na saída o valor de alguma posição de array. Exemplo \texttt{print a [ 1 ]} ou \texttt{print a [ t1 ]} (com os espaços inclusos).
